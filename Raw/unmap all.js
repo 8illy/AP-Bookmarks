@@ -1,0 +1,1 @@
+$("select").each(function(){$(this).val(-12)})

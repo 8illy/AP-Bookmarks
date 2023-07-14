@@ -1,0 +1,1 @@
+$("select").each(function(){$(this).val()==-10?$(this).val(-12):undefined;})

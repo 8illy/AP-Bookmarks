@@ -1,0 +1,13 @@
+div#appContent {
+    width: 60%;
+    margin: auto;
+}
+
+.bookmarkButton {
+    float: right;
+}
+
+#overview{
+    font-size: 20px;
+    padding: 21px;
+}
