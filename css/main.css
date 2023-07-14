@@ -1,6 +1,7 @@
 div#appContent {
     width: 60%;
     margin: auto;
+	margin-top: 60px;
 }
 
 .bookmarkButton {
@@ -10,4 +11,13 @@ div#appContent {
 #overview{
     font-size: 20px;
     padding: 21px;
+}
+
+#alertOutput {
+    position: fixed;
+    width: 100%;
+    margin: auto;
+    top: 5px;
+	padding-left: 50px;
+    padding-right: 50px;
 }
