@@ -9,6 +9,14 @@ let bookmarks = [
 	},
 	
 	{
+		name : "AP Object Relationships Export",
+		desc : "Exports a list of all relationships on all objects.",
+		usage : "Go to the objects list then run the bookmark.",
+		code : '!function(){let e=Array.from($(".listItemValue:nth-child(2)>a")).map(function(e){return{name:e.text,integrationName:$(e).parent().next().next().next().next().text(),id:e.href.split("=")[1]}}),t=[],a=[];for(let n in e){let i=$.Deferred();t.push(i),r(e[n].integrationName,function(t){let r=$(t);a[e[n].integrationName]=[],r.find("RelationshipDef").each(function(t){let i=$(this).attr("objDef1");$(this).attr("objDef2");let l=i==e[n].integrationName?2:1,o=("true"==$(this).attr("isMultiple"+(2==l?1:2))?"Many ":"One ")+e[n].integrationName+" To "+("true"==$(this).attr("isMultiple"+l)?"Many ":"One ")+$(this).attr("objDef"+l),s=$(this).attr("id"),f=$(Array.from(r.find("DataFieldDef > props > relid")).find(e=>$(e).text()==s)).closest("DataFieldDef");a[e[n].integrationName].push({objectName:e[n].name,relatedObjectName:$(this).attr("objDef"+l),relationshipName:$(this).attr("pluralName"+l),cardinality:o,fieldName:f.attr("fieldName"),fieldLabel:f.find("DisplayLabel").text()})}),i.resolve()})}function r(e,t,a){var n=rbf_getXMLHTTPRequest();if(n){n.onreadystatechange=function(){if(n.readyState==READY_STATE_COMPLETE){var e=n.responseText;rbf_checkAjaxError(e,"rbf_getObjectDef",a)||t(e)}};var i=rbf_getAjaxURL()+"&cmd=getObjectDef&objName="+encodeURIComponent(e);n.open("GET",i,!0),n.setRequestHeader("Content-Type","application/x-www-form-urlencoded; charset=UTF-8"),n.send(null)}}$.when.apply(null,t).done(function(){var e,t,n,i,r="Relationship Map.csv";let l,o;i=[].concat(...Object.values(a)).sort((e,t)=>e.objectName+" "+e.fieldName>t.objectName+" "+t.fieldName?1:-1),l=(e,t)=>null===t?"":t,o=Object.keys(i[0]),e=r,t=[o.join(","),...i.map(e=>o.map(t=>{var a,n;return a=e[t],JSON.stringify(a,n=l)}).join(","))].join("\\r\\n"),n=document.createElement("a"),n.setAttribute("href","data:text/plain;charset=utf-8,"+encodeURIComponent(t)),n.setAttribute("download",e),n.style.display="none",document.body.appendChild(n),n.click(),document.body.removeChild(n)})}();',
+		
+	},
+	
+	{
 		name : "AP Mapping Export",
 		desc : "Exports a list of all fields that are currently mapped.",
 		usage : "Open the bookmark while mapping during an import.",

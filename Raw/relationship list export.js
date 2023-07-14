@@ -20,15 +20,28 @@
 				let xmlObj = $(XmlData);
 				fields[objects[i].integrationName] = [];
 				
-				xmlObj.find("DataFieldDef").each(function(index) {
+				xmlObj.find("RelationshipDef").each(function(index) {
+					let obj1 = $(this).attr('objDef1');
+					let obj2 = $(this).attr('objDef2');
+					
+					let objIndex = obj1==objects[i].integrationName?2:1;
+					
+					let cardinality = ($(this).attr('isMultiple'+(objIndex==2?1:2))=="true"?"Many ":"One ")+ objects[i].integrationName + " To "+
+					($(this).attr('isMultiple'+objIndex)=="true"?"Many ":"One ")+ $(this).attr('objDef'+objIndex);
+					let relId =  $(this).attr("id");
+					
+					let field = $(Array.from(xmlObj.find("DataFieldDef > props > relid")).find((e)=>{
+						return $(e).text()==relId;
+					})).closest("DataFieldDef");
+					
+				
 					fields[objects[i].integrationName].push({
 						objectName : objects[i].name,
-						integrationName : objects[i].integrationName,
-						fieldName :$(this).attr('fieldName') ,
-						displayName:$(this).find("DisplayLabel").text(),
-						fieldType:$(this).attr('uiClass'),
-						//dataType:$(this).attr("dataName"),
-						returnType:getReturnType($(this).find("returnType").text()),
+						relatedObjectName : $(this).attr('objDef'+objIndex),
+						relationshipName : $(this).attr('pluralName'+objIndex),
+						cardinality: cardinality,
+						fieldName : field.attr("fieldName"),
+						fieldLabel : field.find("DisplayLabel").text(),
 					});
 				});
 				
@@ -37,25 +50,12 @@
 	}
 	
 	$.when.apply(null, promises).done(function(){
-		toCsv("Field Map.csv",[].concat(...Object.values(fields)).sort((a,b)=>{
+		toCsv("Relationship Map.csv",[].concat(...Object.values(fields)).sort((a,b)=>{
 			return (a.objectName+" "+a.fieldName)>(b.objectName+" "+b.fieldName)?1:-1;
 		}));
 	});
 	
 	
-	
-	function getReturnType(t){
-		let returnTypes = {
-			"1" : "Decimal",
-			"2" : "Currency",
-			"3" : "Integer",
-			"4" : "String",
-			"5" : "Boolean",
-			"6" : "Date",
-			"9" : "Date/Time",
-		}
-		return returnTypes[t]?returnTypes[t]:"";
-	}
 	
 	function escapeCsvCell(data,replacer){
 		return JSON.stringify(data,replacer);
