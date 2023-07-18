@@ -6,6 +6,7 @@ div#appContent {
 
 .bookmarkButton {
     float: right;
+    min-width: 65px;
 }
 
 #overview{
