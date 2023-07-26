@@ -22,3 +22,8 @@ div#appContent {
 	padding-left: 50px;
     padding-right: 50px;
 }
+
+div#version {
+    text-align: right;
+    color: grey;
+}

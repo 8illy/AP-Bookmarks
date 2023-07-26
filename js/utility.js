@@ -65,12 +65,12 @@ function buildVariantSheet(lines){
 			let value = line[column];
 			if(value && value!="NULL" && columns.indexOf(column) > 3){
 				outputLines.push({
-					"Product" : line[columns[2]],
+					"Product" : line[columns[1]],
 					
 					"SKU" : line[columns[0]],
-					"Rowid" : line[columns[1]],
-					"Item Code" : line[columns[2]],
-					"Item Name" : line[columns[3]],
+					//"Rowid" : line[columns[1]],
+					"Item Code" : line[columns[1]],
+					"Item Name" : line[columns[2]],
 					
 					"Option Type" : "rectangle",
 					"Option Name" : column,
@@ -120,7 +120,7 @@ function buildVariantSheet(lines){
 				//"Product" : line.Product,
 				
 				"SKU" : line["SKU"],
-				"Rowid" : line["Rowid"],
+			//	"Rowid" : line["Rowid"],
 				"Item Code" : line["Item Code" ],
 				"Item Name" : line["Item Name"],
 				
@@ -145,7 +145,7 @@ function buildVariantSheet(lines){
 		return {
 		//	"Product" : e.Product,
 			"SKU" : e["SKU"],
-			"Rowid" : e["Rowid"],
+		//	"Rowid" : e["Rowid"],
 			"Item Code" : e["Item Code" ],
 			"Item Name" : e["Item Name"],
 				
