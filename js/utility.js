@@ -104,6 +104,7 @@ function buildVariantSheet(lines){
 			e["Order"] = a[i-1]["Order"] + 1;
 		}else{
 			e["Parent Order"] = a[i-1]["Parent Order"] + 1;
+			e["Order"] = 1;
 		}
 		
 		e["Default"] = e["Order"] == 1;
@@ -133,6 +134,7 @@ function buildVariantSheet(lines){
 				"Option Code" : "",
 				"Order" : "",
 				"Parent Order" : line["Parent Order"],
+				"Default" : false,
 			});
 		}
 		variantOptionLinesWithHeaders.push(line);
