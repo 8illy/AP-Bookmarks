@@ -59,11 +59,11 @@ function buildVariantSheet(lines){
 	let outputLines = [];
 
 	for(let line of lines){
-		//first 4 columns copy to the output line
+		//first 3 columns copy to the output line
 		let columns = Object.keys(line);
 		for(let column in line){
 			let value = line[column];
-			if(value && value!="NULL" && columns.indexOf(column) > 3){
+			if(value && value!="NULL" && columns.indexOf(column) > 2){
 				outputLines.push({
 					"Product" : line[columns[1]],
 					
@@ -105,6 +105,9 @@ function buildVariantSheet(lines){
 		}else{
 			e["Parent Order"] = a[i-1]["Parent Order"] + 1;
 		}
+		
+		e["Default"] = e["Order"] == 1;
+		
 		return e;
 	});
 	
@@ -119,10 +122,10 @@ function buildVariantSheet(lines){
 			variantOptionLinesWithHeaders.push({
 				//"Product" : line.Product,
 				
-				"SKU" : line["SKU"],
+			//	"SKU" : line["SKU"],
 			//	"Rowid" : line["Rowid"],
-				"Item Code" : line["Item Code" ],
-				"Item Name" : line["Item Name"],
+				"Product" : line["Item Code" ],
+				"Product Name" : line["Item Name"],
 				
 				"Option Type" : "rectangle",
 				"Option Name" : line["Option Name"],
@@ -144,10 +147,10 @@ function buildVariantSheet(lines){
 	}).map(function(e){
 		return {
 		//	"Product" : e.Product,
-			"SKU" : e["SKU"],
+		//	"SKU" : e["SKU"],
 		//	"Rowid" : e["Rowid"],
-			"Item Code" : e["Item Code" ],
-			"Item Name" : e["Item Name"],
+			"Product" : e["Item Code" ],
+			"Product Name" : e["Item Name"],
 				
 			"Option Name" : e["Option Name"],
 			"Position" : e["Parent Order"],//maybe not needed?
