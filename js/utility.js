@@ -155,8 +155,8 @@ function buildVariantSheet(lines){
 		//	"Product" : e.Product,
 		//	"SKU" : e["SKU"],
 		//	"Rowid" : e["Rowid"],
-			"Product" : e["Item Code" ],
-			"Product Name" : e["Item Name"],
+			"Product" : e["Product" ],
+			"Product Name" : e["Product Name"],
 				
 			"Option Name" : e["Option Name"],
 			"Position" : e["Parent Order"],//maybe not needed?
