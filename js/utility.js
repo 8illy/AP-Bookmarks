@@ -65,12 +65,12 @@ function buildVariantSheet(lines){
 			let value = line[column];
 			if(value && value!="NULL" && columns.indexOf(column) > 2){
 				outputLines.push({
-					"Product" : line[columns[1]],
 					
-					"SKU" : line[columns[0]],
+					
+					//"Variant SKU" : line[columns[0]],
 					//"Rowid" : line[columns[1]],
-					"Item Code" : line[columns[1]],
-					"Item Name" : line[columns[2]],
+					"Product" : line[columns[1]],
+					"Product Name" : line[columns[2]],
 					
 					"Option Type" : "rectangle",
 					"Option Name" : column,
@@ -96,18 +96,22 @@ function buildVariantSheet(lines){
 	});
 	//build our 2 sheets.
 	let variantOptionLines = outputLines.map(function(e,i,a){
+		
 		if(i==0||a[i-1].Product != e.Product){
+			e["Is Default"] = true;
 			return e;
 		}
 		if(a[i-1]["Option Name"] == e["Option Name"]){
 			e["Parent Order"] = a[i-1]["Parent Order"];
 			e["Order"] = a[i-1]["Order"] + 1;
+			e["Is Default"] = false;
 		}else{
 			e["Parent Order"] = a[i-1]["Parent Order"] + 1;
-			e["Order"] = 1;
+			//e["Order"] = 1;
+			e["Is Default"] = true;
 		}
 		
-		e["Default"] = e["Order"] == 1;
+		//e["Default"] = e["Order"] == 1;
 		
 		return e;
 	});
@@ -125,8 +129,8 @@ function buildVariantSheet(lines){
 				
 			//	"SKU" : line["SKU"],
 			//	"Rowid" : line["Rowid"],
-				"Product" : line["Item Code" ],
-				"Product Name" : line["Item Name"],
+				"Product" : line["Product" ],
+				"Product Name" : line["Product Name"],
 				
 				"Option Type" : "rectangle",
 				"Option Name" : line["Option Name"],
@@ -134,7 +138,7 @@ function buildVariantSheet(lines){
 				"Option Code" : "",
 				"Order" : "",
 				"Parent Order" : line["Parent Order"],
-				"Default" : false,
+				"Is Default" : false,
 			});
 		}
 		variantOptionLinesWithHeaders.push(line);
