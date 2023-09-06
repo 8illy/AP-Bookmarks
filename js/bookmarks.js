@@ -60,6 +60,15 @@ let bookmarks = [
 		script : ()=>{readExcelFileToJSON(buildVariantSheet);},
 		
 	},
+	
+	{
+		name : "Teamworks Spreadsheet Converter",
+		type : TOOL,
+		desc : "Tool to Convert a Teamworks Sheet",
+		usage : "Upload an excel sheet to build the Sheet",
+		script : ()=>{readExcelFileToJSON(buildTeamworksSheet,{"header":1,"raw": false,});},
+		
+	},
 
 
 ]

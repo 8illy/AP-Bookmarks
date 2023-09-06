@@ -36,14 +36,14 @@ function showAlert(message,type="success"){
 	`);
 }
 
-function readExcelFileToJSON(cb){
+function readExcelFileToJSON(cb,p){
 	selectFile(function(evt){
 		let files = evt.target.files; // FileList object
 		let xl2json = new ExcelToJSON();
 		xl2json.parseExcel(files[0],function(workbook){
 			let sheets = workbook.Sheets;
 			let firstSheet = Object.keys(workbook.Sheets)[0];
-			let lines =  XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
+			let lines =  XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet],p);
 			cb(lines);
 		});
 	});
@@ -53,6 +53,61 @@ function selectFile(cb){
 	$("#fileSelect").off("change").change(cb);
 	$("#fileSelect").click();
 	
+}
+
+function buildTeamworksSheet(lines){
+	let headerLine = lines[1];
+
+	let currentHeader = undefined;
+	
+	lines = lines.map((line,i)=>{
+		
+		if(line.length == 1){
+			currentHeader = line[0];
+			//header line - ignore this
+			return false;
+		}
+		
+		if(JSON.stringify(line)==JSON.stringify(headerLine)){
+			return false;
+		}
+		
+		let newLine = Object.fromEntries(headerLine.map(function(e,i,a){
+			return [headerLine[i],line[i]];
+		}));
+		
+		newLine.HEADING = currentHeader;
+		
+		return newLine;
+	}).filter((e)=>{
+		return !!e;
+	}).map((line,i,a)=>{
+		if(i%2==0){
+			line.COMMENT = a[i+1].DESCRIPTION;
+			return line;
+		}else{
+			return false;
+		}
+	}).filter((e)=>{
+		return !!e && e.WHO;
+	}).map((line)=>{
+		
+		//DATE	WHO	DESCRIPTION	START	END	TIME	HOURS	HEADING	COMMENT
+		let order = ["HEADING","DATE", "WHO", "DESCRIPTION","COMMENT", "START","END","TIME","HOURS"];
+		let newLine = {};
+		for(let i of order){
+			newLine[i] = line[i];
+		}
+		return newLine;
+	})
+	
+	console.log(lines);
+	
+	let outputWorksheet = XLSX.utils.json_to_sheet(lines);
+	let outputWorkbook = XLSX.utils.book_new();
+	XLSX.utils.book_append_sheet(outputWorkbook, outputWorksheet, "Sheet1");
+	
+	XLSX.writeFile(outputWorkbook, "Output.xlsx", { compression: true });
 }
 
 function buildVariantSheet(lines){
