@@ -57,7 +57,7 @@ function selectFile(cb){
 
 function buildTeamworksSheet(lines){
 	let headerLine = lines[1].map((e)=>{return e.toUpperCase();});
-
+console.log(headerLine);
 	let currentHeader = undefined;
 	
 	lines = lines.map((line,i)=>{
@@ -83,6 +83,7 @@ function buildTeamworksSheet(lines){
 		return !!e;
 	}).map((line,i,a)=>{
 		if(i%2==0){
+			console.log(line,a[i+1]);
 			line.COMMENT = a[i+1].DESCRIPTION;
 			return line;
 		}else{
@@ -96,13 +97,15 @@ function buildTeamworksSheet(lines){
 		let order = ["HEADING","DATE", "WHO", "DESCRIPTION","COMMENT", "START","END","TIME","HOURS"];
 		let newLine = {};
 		for(let i of order){
-			newLine[i] = line[i];
+			newLine[i] = line[i];//set initial order
 		}
-				
+		for(let i in line){
+			newLine[i] = line[i];
+		}		
 		return newLine;
 	})
 	
-	console.log(lines);
+console.log(lines);
 	
 	let outputWorksheet = XLSX.utils.json_to_sheet(lines);
 	let outputWorkbook = XLSX.utils.book_new();
