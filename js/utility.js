@@ -56,7 +56,7 @@ function selectFile(cb){
 }
 
 function buildTeamworksSheet(lines){
-	let headerLine = lines[1];
+	let headerLine = lines[1].map((e)=>{return e.toUpperCase();});
 
 	let currentHeader = undefined;
 	
@@ -68,7 +68,7 @@ function buildTeamworksSheet(lines){
 			return false;
 		}
 		
-		if(JSON.stringify(line)==JSON.stringify(headerLine)){
+		if(JSON.stringify(line.map((e)=>{return e.toUpperCase();}))==JSON.stringify(headerLine)){
 			return false;
 		}
 		
@@ -98,6 +98,9 @@ function buildTeamworksSheet(lines){
 		for(let i of order){
 			newLine[i] = line[i];
 		}
+		
+		newLine[i].DATE = new Date(newLine[i].DATE)
+		
 		return newLine;
 	})
 	
