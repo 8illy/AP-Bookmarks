@@ -98,9 +98,7 @@ function buildTeamworksSheet(lines){
 		for(let i of order){
 			newLine[i] = line[i];
 		}
-		
-		newLine.DATE = new Date(newLine.DATE)
-		
+				
 		return newLine;
 	})
 	
