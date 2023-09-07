@@ -99,7 +99,7 @@ function buildTeamworksSheet(lines){
 			newLine[i] = line[i];
 		}
 		
-		newLine[i].DATE = new Date(newLine[i].DATE)
+		newLine.DATE = new Date(newLine.DATE)
 		
 		return newLine;
 	})
