@@ -69,6 +69,15 @@ let bookmarks = [
 		script : ()=>{readExcelFileToJSON(buildTeamworksSheet,{"header":1,"raw": false,});},
 		
 	},
+	
+	{
+		name : "ERPREF SAP Exporter",
+		type : BOOKMARK,
+		desc : "Tool to Export a table from https://sap.erpref.com/",
+		usage : "Run the bookmark on the desired page",
+		code : `javascript:!function(){let t=document.querySelector("#columnselectcollection > table > tbody").children,e=i(t[0]),n=[];for(let r=1;r<t.length;r++){let l=i(t[r]);n.push(o(l,e))}function o(t,e){let n={};for(let r in e)n[e[r]]=t[r];return n}function i(t){return Array.from(t.children).map(function(t){return t.innerText})}function c(t,e){return t}var u,a,d,f,p="SAP Export.csv";let s,h;f=n,s=(t,e)=>null===e?"":e,h=Object.keys(f[0]),u=p,a=[h.join(","),...f.map(t=>h.map(e=>{var n,r;return n=t[e],n}).join(","))].join("\r\n"),d=document.createElement("a"),d.setAttribute("href","data:text/plain;charset=utf-8,"+encodeURIComponent(a)),d.setAttribute("download",u),d.style.display="none",document.body.appendChild(d),d.click(),document.body.removeChild(d)}();`,
+		
+	},
 
 
 ]
